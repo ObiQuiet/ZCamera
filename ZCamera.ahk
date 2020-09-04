@@ -8,12 +8,27 @@
 
 ; -------------------------
 ; Limitations
+; Would be nice if we didn't have to have the "Run as Administrator" prompt to reliably send keystrokes to Zwift
+; The method used for detecting when to Auto-Pause can still be improved, to be faster and more accurate at all screen sizes
+; The small status message may not appear in a useful place on multi-monitor systems
+; Zwift needs to be the active window while you ride
+
 
 #SingleInstance force
 
 if not A_IsAdmin
-	Run *RunAs "%A_ScriptFullPath%"
-
+	{
+	try
+		{
+		Run *RunAs "%A_ScriptFullPath%"
+		}
+	catch
+		{
+		MsgBox, 64,, ZCamera needs to run as an administrator to reliably send keystrokes to the Zwift game.  Exiting.
+		ExitApp
+		}
+	}
+	
 ; --- performance enhancers, see https://www.autohotkey.com/docs/misc/Performance.htm
 #NoEnv 
 SetBatchLines -1
@@ -137,7 +152,7 @@ no  := 0
 	; The timer for taking pictures is stared in the main loop, once Zwift is active and ready
 	
 ; ---------------------
-; Disables things that would make ZCamera press keys
+; Disables timers which would make ZCamera press keys
 Stop()
 	{
 	SetTimer, ChangeView,  Off
