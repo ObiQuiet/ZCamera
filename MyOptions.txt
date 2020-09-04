@@ -1,0 +1,86 @@
+
+
+; -------------------------------------------------------------------
+; Primary View
+; The camera comes back to this view in between each of the others
+; To change the view that is "primary", set PrimayView equal to the name of the other view, e.g. "Default"
+; And, set the odds of that view to 0 (otherwise it will be chosen at random, in addition to being the primary view
+; -------------------------------------------------------------------
+
+PrimaryView := "FirstPerson"     
+
+
+; -------------------------------------------------------------------
+; Control ZCamera's behavior and your preferences
+; -------------------------------------------------------------------
+
+; -------------------------------------------------------------------
+; VIEWS
+; For each view in this list:
+;
+; Odds: Contols how often the view will be selected for display  
+;    Odds of 0 or off, the view won't be selected
+;    Otherwise, Odds is the relative frequency for choosing the view 
+;	 The numbers do not need to add up to 100
+; 
+; MinTime, MaxTime:  In seconds, the amount of time the camera will spend in that view before going back to the Primary View
+;    The time spent in the view will vary randomly between these values
+;
+; TakePic:  true means that ZCamera may take a screenshot while that view is active.  false, it won't.
+;
+; Key: The Zwift keystroke that switches the game to the view
+
+
+FirstPerson		:= {Odds:   0, MinTime: 30, MaxTime: 60, TakePic: false, Key: "{NumPad3}"}
+                  ; Odds set to 0 since this is the primary view (see above), and we don't want it also chosen at random
+						
+Side	  		:= {Odds:  20, MinTime:  5, MaxTime: 12, TakePic: yes}
+Helicopter  	:= {Odds:  10, MinTime: 10, MaxTime: 30, TakePic: no }
+Spectator	 	:= {Odds:  20, MinTime:  7, MaxTime: 12, TakePic: no }
+HeadOn	 		:= {Odds:  10, MinTime:  3, MaxTime:  7, TakePic: yes}
+RearWheel	 	:= {Odds:   5, MinTime:  3, MaxTime:  7, TakePic: no }
+ThirdPerson		:= {Odds: off, MinTime: 10, MaxTime: 20, TakePic: no }
+Default			:= {Odds:  20, MinTime: 10, MaxTime: 20, TakePic: yes}
+BirdsEye		:= {Odds:  20, MinTime: 15, MaxTime: 30, TakePic: yes}
+Drone			:= {Odds: off, MinTime: 10, MaxTime: 30, TakePic: no }
+					; In Drone view, ZCamera will move the drone around to change perspective.
+					; If you don't want this, set the Odds for the Drone view to 0 or off
+					
+					; The 'd' key will let you see the Drone pilot in action
+					; by enabling it for 60 seconds at a time
+					
+					; See the EXPERIMENTAL note below for more info
+
+; -------------------------------------------------------------------
+; PICTURES / CAMERA / SCREENSHOTS
+
+; Exactly when pictures are taken depends on which views are set to allow pictures (with the TakePic setting above),
+; which view is visible when the interval occurs, and some randomness 
+
+FirstPictureDelay := 3   	 ; minutes to wait after ZCamera starts, before it will try to take the first picture 
+PictureInterval   := 10  	 ; minimum number of minutes between each picture
+NumberOfPictures  := 5	 	 ; the maximum number of pictures ZCamera will take in a session
+MsgWhenPictureTaken := false ; if true, puts a message on screen when ZCamera has taken a picture.  if off or false, no message
+
+; -------------------------------------------------------------------
+; EXPERIMENTAL: DronePilot
+; When in Drone view, ZCamera will fly the camera around.  Which is pretty cool!
+;
+; Press the 'd' key to start Drone view manually (try it out a few times!)
+;
+; It does this by pressing the left/right, up/down, +/- keys for you
+; It also adjusts the drone's speed based on how far from your avatar the drone is, 
+; to minimize the chance of making you dizzy by flying fast in small circles
+; 
+; While ZCamera works hard to avoid pressing keys when any Zwift menus
+; and controls are active, it *could* still happen.  Normally, it's harmless.
+;
+; But, since the game's drone-flying keystrokes are also used for U-Turns and route changes at intersections, 
+; DronePilot is not recommended for use during important rides (too much at stake!)
+;
+; Also note that Zwift's Drone feature in the game isn't perfect -- the view may pass through scenery, under roads, and
+; inside other player's bodies.   
+;
+; Set the Odds value for the Drone view to off to disable the drone view completely
+
+; -------------------------------------------------------------------
