@@ -17,8 +17,9 @@ ZCamera is a set-it-and-forget-it, automatic view changer and photo-taker for Zw
 
 Limitations:
 * Would be nice if we didn't have to have the "Run as Administrator" prompt to reliably send keystrokes to Zwift
-* The method used for detecting when to Auto-Pause can still be improved, to be faster and more accurate at all resolutions
-
+* The method used for detecting when to Auto-Pause can still be improved, to be faster and more accurate at all screen sizes
+* The small status message may not appear in a useful place on multi-monitor systems
+* Zwift needs to be the active window while you ride
 
 About the (cool, but) experimental Drone View:
 
