@@ -5,16 +5,7 @@
 ; -------------------------
 
 #include fnColorSearch.ahk
-
-; These are Zwift's button, menu and dialog background colors
-rgbOrange  := 0xf36c3d
-rgbBlue    := 0x1192cc
-rgbBlack   := 0x181818
-rgbDkGray  := 0x303030
-rgbLtGray  := 0x7f7f7f
-rgbVLtGray := 0xdcdcdc
-rgbOffWhite:= 0xececec   ; only used in the group ride pre-start message box
-rgbWhite   := 0xffffff
+#include ZwiftColors.ahk
 
 
 ; -----------------------------------------------------------------
