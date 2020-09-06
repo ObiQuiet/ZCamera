@@ -173,6 +173,7 @@ Stop()
 	{
 	SetTimer, ChangeView,  Off
 	SetTimer, TakePicture, Off
+	SetTimer, CheckForAchievements, Off
 	SetTimer, DroneTick,   Delete
 	CleanUpAfterDroneMode()   ; in case we were in it
 	}
@@ -447,6 +448,7 @@ $c::
 		StatusMsg("ZCamera FirstPerson")
 		Gosub ChangeView            ; this will switch to the Primary View and restart the ChangeView timer
 		SetTimer, TakePicture, On
+		SetTimer, CheckForAchievements, On
 		}
  	return
 #IfWinActive
