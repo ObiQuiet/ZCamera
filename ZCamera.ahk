@@ -147,6 +147,8 @@ no  := 0
 	numPicsToTake := 	NumberOfPictures   			; take no more than this many pictures.  Zero for no pictures at all.  
 	fPicTimerStarted := false
  
+	fAchievementPics := TakePicturesOfAchievements
+ 
 	keyTakePic 	  := "{F10}"
 	
 	; The timer for taking pictures is stared in the main loop, once Zwift is active and ready
@@ -184,11 +186,15 @@ loop
 		{				
 		StatusMsg("ZCamera " . strCurrentView)
 		
-		; start the picture-taking clock for the first time
+		; start the picture-taking clocks for the first time
 		if (not fPicTimerStarted)
 			{
 			msFirstPic := minsFirstPic * 60 * 1000
 			SetTimer, TakePicture, -%msFirstPic%
+			if (fAchievementPics)
+				{
+				SetTimer, CheckForAchievements, 2000
+				}
 			fPicTimerStarted := true
 			}		
 		}	
@@ -299,6 +305,29 @@ TakePicture:
 	else
 		SetTimer TakePicture, Delete
 	
+	return
+
+
+; --------------------------------------------------------------------------------------------------
+; CheckForAchievements - invoked by timer
+; Takes a screen shot when the achievement banners appear
+; --------------------------------------------------------------------------------------------------
+
+CheckForAchievements:
+
+	if CheckForAchievements()
+		{
+		SendToZwiftOnly(keyTakePic)
+ 		SetTimer, CheckForAchievements, 15000   
+		}
+	else
+		{
+		SetTimer, CheckForAchievements, 2000
+		}
+
+	if (MsgWhenPictureTaken)
+		CenterToolTip("ZCamera Picture Taken", 3000)
+
 	return
 
 ; --------------------------------------------------------------------------------------------------

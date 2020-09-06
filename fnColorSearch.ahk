@@ -4,23 +4,23 @@
 ; Author: ObiQuiet, quietjedi@gmail.com
 ; -------------------------
 
-ColorSearch(pctX, pctY, rgb)  ; returns true if the color is found within a small area, 
-							  ; expressed as a (pctX, pctY) are the upper left corner expressed as a percentage of the window size
+ColorSearch(pctX, pctY, rgb, pxSize := 5, variation := 0)  ; returns true if the color is found within a small area, 
+		 ; (pctX, pctY) are the upper left corner expressed as a percentage of the window size
 	{
 	CoordMode, Pixel, Relative
-	CoordMode, Mouse, Relative
 	
-	WinGetPos , X, Y, Width, Height, ahk_exe ZwiftApp.exe
-	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, (Width*pctX)+5, (Height*pctY)+5, rgb, 0, Fast RGB
+	WinGetPos , X, Y, Width, Height, A
+	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, (Width*pctX)+pxSize, (Height*pctY)+pxSize, rgb, variation, Fast RGB
 	
 	return (ErrorLevel==0)
 	}
 	
-ColorSearchLine(pctX, pctY, pctWidth, rgb)	
+ColorSearchLine(pctX, pctY, pctWidth, rgb, variation := 0)	
 	{
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, ahk_exe ZwiftApp.exe			
-	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, Width*(pctX+pctWidth), Height*pctY, rgb, 0, Fast RGB
+	WinGetPos , X, Y, Width, Height, A  		
+	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, Width*(pctX+pctWidth), 1+Height*pctY, rgb, variation, Fast RGB
+	
 	return (ErrorLevel==0)	
 	}
 	

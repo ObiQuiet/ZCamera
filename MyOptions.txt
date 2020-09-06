@@ -56,12 +56,15 @@ Drone			:= {Odds: off, MinTime: 10, MaxTime: 30, TakePic: no }
 
 ; Exactly when pictures are taken depends on which views are set to allow pictures (with the TakePic setting above),
 ; which view is visible when the interval occurs, and some randomness 
+; Set NumberOfPictures to 0 to disable picture taking
 
 FirstPictureDelay := 3   	 ; minutes to wait after ZCamera starts, before it will try to take the first picture 
 PictureInterval   := 10  	 ; minimum number of minutes between each picture
-NumberOfPictures  := 5	 	 ; the maximum number of pictures ZCamera will take in a session
+NumberOfPictures  := 5	 	 ; the maximum number of pictures ZCamera will take in a session.  
 MsgWhenPictureTaken := false ; if true, puts a message on screen when ZCamera has taken a picture.  if off or false, no message
 
+TakePicturesOfAchievements := yes ; ZCamera will try to capture a screen shot when the Unlock and Route Complete achievements appear
+                                  ; Set to no to disable this feature 
 ; -------------------------------------------------------------------
 ; EXPERIMENTAL: DronePilot
 ; When in Drone view, ZCamera will fly the camera around.  Which is pretty cool!
