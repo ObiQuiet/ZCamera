@@ -38,7 +38,7 @@ CheckForAchievements()
 	
 	
 	msEnd := A_TickCount-msStart
-	ToolTip, %result% Achievement time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.5, 3
+	;ToolTip, %result% Achievement time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.5, 3
 	
 	return result
 	

@@ -46,6 +46,7 @@ SetWorkingDir %A_ScriptDir% ; Location for include files
 #include fnTooltips.ahk
 #include classWeightedChoices.ahk
 #include fnCheckForMenus.ahk
+#include fnCheckForAchievements.ahk
 #include fnRandBetween.ahk
 
 ; --------------------------------------------------------------------------------------------------
