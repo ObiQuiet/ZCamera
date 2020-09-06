@@ -5,13 +5,7 @@
 ; -------------------------
 
 #include fnColorSearch.ahk
-
-; the alternating light and blue Z's in the banner background, and the amount of variation in color we're ok with finding
-rgbBlue1  := 0x3979C3
-varBlue1  := 5
-
-rgbBlue2  := 0x3d7dC7
-varBlue2  := 5
+#include ZwiftColors.ahk
 
 ; -----------------------------------------------------------------
 ; Combine multiple searches to come to one conclusion
@@ -24,21 +18,22 @@ CheckForAchievements()
 
 	global rgbBlue2
 	global varBlue2
+	
+	global rgbOrange
+	global rgbWhite
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	; look for the alternating light and blue Z's in the banner background
-;	result := ColorSearchLine( 0.80, 0.85, 0.18, rbgLtBlue, varBlue)
-;	and ColorSearchLine( 0.80, 0.85, 0.18, rbgLtBlue, varLtBlue)
-		 ;  and ColorSearchLine( 0.80, 0.87, 0.05, rbgBlue, varBlue) and ColorSearchLine( 0.80, 0.87, 0.05, rbgLtBlue, varLtBlue))	
-	
-	  result := ColorSearch(0.85, 0.75, rgbBlue1, 300, varBlue1)
-	        and ColorSearch(0.85, 0.75, rgbBlue2, 300, varBlue2)
-	
+	; look for the alternating light and blue Z's in the banner background	
+	result := (   ColorSearch(0.85, 0.75, rgbBlue1, 300, varBlue1)   ; look for the blue Z's in the banner background	
+	          and ColorSearch(0.85, 0.75, rgbBlue2, 300, varBlue2) ) ; this banner has some alpha-channel transparency, so variation is needed
+		   or (   ColorSearch(0.00, 0.80, rgbWhite,  300, 0)         ; the big white and orange Unlock banner
+			  and ColorSearch(0.95, 0.80, rgbOrange, 300, 0))
+			  
 	
 	msEnd := A_TickCount-msStart
-	;ToolTip, %result% Achievement time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.5, 3
+	;ToolTip, %A_TickCount% %result% Achievement time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.5, 3
 	
 	return result
 	

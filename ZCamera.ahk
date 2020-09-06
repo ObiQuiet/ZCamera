@@ -61,6 +61,19 @@ SendToZwiftOnly(key)
 	}
 
 ; --------------------------------------------------------------------------------------------------
+; Add a busy-wait delay in critical threads without using Sleep 
+; --------------------------------------------------------------------------------------------------
+;
+CriticalSleep(ms)
+	{
+	msTimesUp := A_TickCount + ms
+	while (A_TickCount < msTimesUp)
+		{
+		x := A_TickCount  ; just in case a no-op is optimzed out
+		}	
+	}
+
+; --------------------------------------------------------------------------------------------------
 ; Initialization
 ; --------------------------------------------------------------------------------------------------
 ;
@@ -194,7 +207,7 @@ loop
 			SetTimer, TakePicture, -%msFirstPic%
 			if (fAchievementPics)
 				{
-				SetTimer, CheckForAchievements, 2000
+				SetTimer, CheckForAchievements, 1000
 				}
 			fPicTimerStarted := true
 			}		
@@ -315,16 +328,20 @@ TakePicture:
 ; --------------------------------------------------------------------------------------------------
 
 CheckForAchievements:
-
-	if CheckForAchievements()
-		{
-		SendToZwiftOnly(keyTakePic)
- 		SetTimer, CheckForAchievements, 15000   
+	Critical On
+	
+	if CheckForAchievements() and fZwiftActive    ; have to bypass the menu check which also tests positive for the unlock banner
+		{	
+		CriticalSleep(1000)                       ; wait a sec for the banner animation to finish 
+		Send %keyTakePic%
+ 		SetTimer, CheckForAchievements, 10000    ; don't fire again for the same banner
 		}
 	else
 		{
-		SetTimer, CheckForAchievements, 2000
+		SetTimer, CheckForAchievements, 1000
 		}
+
+	Critical Off
 
 	if (MsgWhenPictureTaken)
 		CenterToolTip("ZCamera Picture Taken", 3000)

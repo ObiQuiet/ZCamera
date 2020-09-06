@@ -10,8 +10,9 @@ rgbOffWhite:= 0xececec   ; only used in the group ride pre-start message box
 rgbWhite   := 0xffffff
 
 ; the alternating light and blue Z's in the banner background, and the amount of variation in color we're ok with finding
+; this banner has some alpha-channel transparency, so variation is needed	
 rgbBlue1  := 0x3979C3
-varBlue1  := 5
+varBlue1  := 10
 
-rgbBlue2  := 0x3d7dC7
-varBlue2  := 5
+rgbBlue2  := 0x1F62B3   
+varBlue2  := 10
