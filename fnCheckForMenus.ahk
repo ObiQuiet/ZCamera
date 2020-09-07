@@ -34,8 +34,8 @@ ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDeb
 			PixelGetColor, rgbAtXY, Width*pctX, Height*pctY, RGB
 			if (fDebug)
 				{
-				Box_Draw(Width*pctX, Height*pctY, 3, 3)
-				sleep 100
+				; Box_Draw(Width*pctX, Height*pctY, 3, 3)
+				; sleep 100
 				}
 			
 			if (rgbAtXY == rgbWhite) 
@@ -71,7 +71,7 @@ CheckForMenus()
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	result := ColorSearchLine( 0.35,             0.88, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
+	result := ColorSearchHLine( 0.35,             0.88, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
 		  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
 		  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center, for all other menus and dialogs
 		  or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
@@ -96,7 +96,7 @@ CheckForMenus1920x1080()
 	
 	msStart := A_TickCount
 	
-	result := ColorSearchLine(760, 860, 1150-760, rgbOrange)  ; Direction choices at intersections
+	result := ColorSearchHLine(760, 860, 1150-760, rgbOrange)  ; Direction choices at intersections
 	or DoubleColorSearch(880,  1040,  140, rgbOrange) ; Settings
 	or DoubleColorSearch(850,  1032,  200, rgbOrange) ; Garage
 	or DoubleColorSearch(870,   912,  200, rgbOrange) ; Searching while Pairing
@@ -124,27 +124,20 @@ CheckForMenus1920x1080()
 CheckForMenus_Alg2()
 	
 	{
-	global rgbOrange
-	global rgbOffWhite
-	global rgbWhite
+	global rgbOrange, rgbBlue, rgbBlack, rgbDkGray, rgbLtGray, rgbVLtGray, rgbWhite, rgbOffWhite   
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	
-	result :=  QuadColorSearch(  0.40, 0.80,       0.60, 0.95, rgbWhite)
-	; QuadColorSearch(  0.40, 0.40,       0.60, 0.60, rgbWhite)
-	     ;  or QuadColorSearch(  0.40, 0.80,       0.60, 0.95, rgbOrange)
-		 ;  or QuadColorSearch(  0.40, 0.80,       0.60, 0.95, rgbWhite)
-		 ;  or  ColorSearchLine( 0.40,             0.80, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
-		;  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
-		;  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center
-		;  or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
+	result := ColorSearchHLine( 0.35, 0.88, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
+		   or ColorSearchVLine( 0.50, 0.50, 0.45, rgbOrange)
+		   or ColorSearchVLine( 0.30, 0.50, 0.45, rgbOrange)
+		   or ColorSearchVLine( 0.60, 0.50, 0.45, rgbOrange)
+		   or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
 
-		;  or  ColorSearchGrid( 0.30, 0.70, 0.10, 0.40, 0.50, 0.05, false)   ; grid at the center of the screen for most menus  
-																			 ; two smaller grids is faster than one large one -- fewer total checks
+	
 	msEnd := A_TickCount-msStart
-	ToolTip, ColorSearchGrid time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.12, 3
+	ToolTip, ColorSearchAlg2 time: %msEnd%ms,A_ScreenWidth*0.5,A_ScreenHeight*0.12, 3
 	
 	return result
 	
