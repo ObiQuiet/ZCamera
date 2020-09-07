@@ -13,23 +13,19 @@
 CheckForAchievements()
 	
 	{
-	global rgbBlue1
-	global varBlue1
-
-	global rgbBlue2
-	global varBlue2
+	global rgbBlue1, varBlue1
+	global rgbBlue2, varBlue2
 	
-	global rgbOrange
-	global rgbWhite
+	global rgbOrange, rgbWhite
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
 	; look for the alternating light and blue Z's in the banner background	
-	result := (   ColorSearch(0.85, 0.75, rgbBlue1, 300, varBlue1)   ; look for the blue Z's in the banner background	
-	          and ColorSearch(0.85, 0.75, rgbBlue2, 300, varBlue2) ) ; this banner has some alpha-channel transparency, so variation is needed
-		   or (   ColorSearch(0.00, 0.80, rgbWhite,  300, 0)         ; the big white and orange Unlock banner
-			  and ColorSearch(0.95, 0.80, rgbOrange, 300, 0))
+	result := (   ColorSearch(0.85, 0.75, rgbBlue1, 150, varBlue1)   ; look for the blue Z's in the banner background	
+	          and ColorSearch(0.85, 0.75, rgbBlue2, 150, varBlue2) ) ; this banner has some alpha-channel transparency, so variation is needed
+		   or (   ColorSearch(0.00, 0.75, rgbWhite,  150, 0)         ; the big white and orange Unlock banner
+			  and ColorSearch(0.85, 0.75, rgbOrange, 150, 0))
 			  
 	
 	msEnd := A_TickCount-msStart

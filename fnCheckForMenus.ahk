@@ -16,16 +16,8 @@
 
 ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDebug := 0)
 	{
-	global rgbOrange  
-	global rgbBlue    
-	global rgbBlack   
-	global rgbDkGray  
-	global rgbLtGray 
-	global rgbVLtGray 
-	; global rgbOffWhite
-	global rgbWhite   
+	global rgbOrange, rgbBlue, rgbBlack, rgbDkGray, rgbLtGray, rgbVLtGray, rgbWhite   
 
-	
 	CoordMode, Pixel, Relative
 
 	WinGetPos , X, Y, Width, Height, ahk_exe ZwiftApp.exe			
@@ -40,11 +32,9 @@ ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDeb
 			{
 			;PixelGetColor, rgbAtXY, A_ScreenWidth*pctX, A_ScreenHeight*pctY, RGB
 			PixelGetColor, rgbAtXY, Width*pctX, Height*pctY, RGB
-			mx := A_ScreenWidth*pctX
-			my := A_ScreenHeight*pctY
 			if (fDebug)
 				{
-				MouseMove,%mx%, %my%
+				Box_Draw(Width*pctX, Height*pctY, 3, 3)
 				sleep 100
 				}
 			
@@ -76,13 +66,12 @@ ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDeb
 CheckForMenus()
 	
 	{
-	global rgbOrange
-	global rgbOffWhite
+	global rgbOrange, rgbOffWhite
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	result := ColorSearchLine( 0.40,             0.80, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
+	result := ColorSearchLine( 0.35,             0.88, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
 		  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
 		  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center, for all other menus and dialogs
 		  or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
@@ -102,13 +91,7 @@ CheckForMenus()
 
 CheckForMenus1920x1080()
 	{
-	global rgbOrange  
-	global rgbBlue    
-	global rgbBlack   
-	global rgbDkGray  
-	global rgbLtGray  
-	global rgbWhite   
-	global rgbVLtGray 
+	global rgbOrange, rgbBlue, rgbBlack, rgbDkGray, rgbLtGray, rgbWhite, rgbVLtGray 
 
 	
 	msStart := A_TickCount

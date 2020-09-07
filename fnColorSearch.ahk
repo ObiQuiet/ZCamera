@@ -12,6 +12,8 @@ ColorSearch(pctX, pctY, rgb, pxSize := 5, variation := 0)  ; returns true if the
 	WinGetPos , X, Y, Width, Height, A
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, (Width*pctX)+pxSize, (Height*pctY)+pxSize, rgb, variation, Fast RGB
 	
+	; Box_Draw(Width*pctX, Height*pctY, pxSize, pxSize)
+	; sleep 500
 	return (ErrorLevel==0)
 	}
 	
@@ -20,6 +22,10 @@ ColorSearchLine(pctX, pctY, pctWidth, rgb, variation := 0)
 	CoordMode, Pixel, Relative
 	WinGetPos , X, Y, Width, Height, A  		
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, Width*(pctX+pctWidth), 1+Height*pctY, rgb, variation, Fast RGB
+	
+	; Box_Draw(Width*pctX, Height*pctY, Width*pctWidth, 1)
+	; sleep 500
+	
 	
 	return (ErrorLevel==0)	
 	}
