@@ -63,7 +63,7 @@ PictureInterval   := 10  	 ; minimum number of minutes between each picture
 NumberOfPictures  := 5	 	 ; the maximum number of pictures ZCamera will take in a session.  
 MsgWhenPictureTaken := false ; if true, puts a message on screen when ZCamera has taken a picture.  if off or false, no message
 
-TakePicturesOfAchievements := yes ; ZCamera will try to capture a screen shot when the Unlock and Route Complete achievements appear
+TakePicturesOfAchievements := no  ; ZCamera will try to capture a screen shot when the Unlock and Route Complete achievements appear
                                   ; Set to no to disable this feature 
 ; -------------------------------------------------------------------
 ; EXPERIMENTAL: DronePilot

@@ -105,6 +105,7 @@ yes := 1
 no  := 0
 
 #include MyOptions.txt
+#include *i SpecialOptions.txt   ; overrides the default options file if present
 
 	; If views are added or removed in the Options include file, add or remove them here too
 	; Easier to just set their Odds to 0 in the Options file, though
