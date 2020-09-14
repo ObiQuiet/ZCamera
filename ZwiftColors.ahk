@@ -9,6 +9,9 @@ rgbVLtGray := 0xdcdcdc
 rgbOffWhite:= 0xececec   ; only used in the group ride pre-start message box
 rgbWhite   := 0xffffff
 
+; for use with "if var in matchlist" statements
+ListOfColors = %rgbWhite%,%rgbOrange%,%rgbBlue%,%rgbBlack%,%rgbDkGray%,%rgbLtGray%,%rgbVLtGray%,%rgbOffWhite%
+   
 ; the alternating light and blue Z's in the banner background, and the amount of variation in color we're ok with finding
 ; this banner has some alpha-channel transparency, so variation is needed	
 rgbBlue1  := 0x3979C3

@@ -6,6 +6,8 @@
 
 #include fnColorSearch.ahk
 #include ZwiftColors.ahk
+#include classColorDetectionArea.ahk
+
 
 
 ; -----------------------------------------------------------------
@@ -20,7 +22,7 @@ ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDeb
 
 	CoordMode, Pixel, Relative
 
-	WinGetPos , X, Y, Width, Height, ahk_exe ZwiftApp.exe			
+	WinGetPos , X, Y, Width, Height, A			
 
 	pctX := pctXStart
 	pctY := pctYStart
@@ -63,17 +65,23 @@ ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDeb
 ; -----------------------------------------------------------------
 ; Combine multiple searches to come to one conclusion
 
+objSearchArea :=      new class_ColorDetectionArea(0.30, 0.40, 0.40, 0.60)
+objLowerSearchArea := new class_ColorDetectionArea(0.30, 0.70, 0.40, 0.95)
+
 CheckForMenus()
 	
 	{
 	global rgbOrange, rgbOffWhite
+	global objSearchArea, objLowerSearchArea
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	result := ColorSearchHLine( 0.35,             0.88, 0.30, rgbOrange)     ; check for the Route/Intersection selection prompts
-		  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
-		  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center, for all other menus and dialogs
+	result := ColorSearchHLine( 0.40,             0.85, 0.20, rgbOrange)     ; check for the Route/Intersection selection prompts
+		  or objSearchArea.Search_Alg2() 
+		  or objLowerSearchArea.Search_Alg2()
+		;  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
+		;  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center, for all other menus and dialogs
 		  or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
 
 		;  or  ColorSearchGrid( 0.30, 0.70, 0.10, 0.40, 0.50, 0.05, false)   ; grid at the center of the screen for most menus  
