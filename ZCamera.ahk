@@ -96,7 +96,7 @@ msExitTime := A_TickCount+msExitDelay
 	fOkToSendKeys := false     ; when true, prevents ZCamera from sending any keystrokes that might interfere with menus or other programs
 					   	   
 	GoSub CheckForMenus
-	SetTimer, CheckForMenus, 500, 0   
+	SetTimer, CheckForMenus, 150, 0   
 	
 ; ---------------------
 ; Initialize the views we'll be switching between, and create a set of weighted choices from which to select one at random
