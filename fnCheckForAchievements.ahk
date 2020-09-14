@@ -24,9 +24,9 @@ CheckForAchievements()
 	; look for the alternating light and blue Z's in the banner background	
 	result := (   ColorSearch(0.85, 0.75, rgbBlue1, 150, varBlue1)   ; look for the blue Z's in the banner background	
 	          and ColorSearch(0.85, 0.75, rgbBlue2, 150, varBlue2) ) ; this banner has some alpha-channel transparency, so variation is needed
-		   or (   ColorSearch(0.00, 0.80, rgbWhite,  150, 0)		   ; the big white and orange Unlock banner
-			  and ColorSearch(0.20, 0.80, rgbWhite,  150, 0)		  
-			  and ColorSearch(0.80, 0.95, rgbOrange, 150, 0))
+		   or (   ColorSearch(0.00, 0.80, rgbWhite,  10, 0)		   ; the big white and orange Unlock banner
+			  and ColorSearch(0.20, 0.80, rgbWhite,  10, 0)		  
+			  and ColorSearch(0.80, 0.95, rgbOrange, 10, 0))
 			  
 	
 	msEnd := A_TickCount-msStart
