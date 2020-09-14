@@ -7,9 +7,11 @@
 ColorSearch(pctX, pctY, rgb, pxSize := 5, variation := 0)  ; returns true if the color is found within a small area, 
 		 ; (pctX, pctY) are the upper left corner expressed as a percentage of the window size
 	{
+	global winTitle
+	
 	CoordMode, Pixel, Relative
 	
-	WinGetPos , X, Y, Width, Height, A
+	WinGetPos , X, Y, Width, Height, %winTitle%
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, (Width*pctX)+pxSize, (Height*pctY)+pxSize, rgb, variation, Fast RGB
 	
 	; Box_Draw(Width*pctX, Height*pctY, pxSize, pxSize)
@@ -19,8 +21,10 @@ ColorSearch(pctX, pctY, rgb, pxSize := 5, variation := 0)  ; returns true if the
 	
 ColorSearchHLine(pctX, pctY, pctWidth, rgb, variation := 0)	
 	{
+	global winTitle
+	
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, A  		
+	WinGetPos , X, Y, Width, Height, %winTitle%  		
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, Width*(pctX+pctWidth), 1+Height*pctY, rgb, variation, Fast RGB
 	
 	; Box_Draw(Width*pctX, Height*pctY, Width*pctWidth, 1)
@@ -32,8 +36,10 @@ ColorSearchHLine(pctX, pctY, pctWidth, rgb, variation := 0)
 	
 ColorSearchVLine(pctX, pctY, pctHeight, rgb, variation := 0)	
 	{
+	global winTitle
+	
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, A  		
+	WinGetPos , X, Y, Width, Height, %winTitle%  		
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, 1+Width*pctX, Height*(pctY+pctHeight), rgb, variation, Fast RGB
 	
 	; Box_Draw(Width*pctX, Height*pctY, Width*pctWidth, 1)
@@ -61,8 +67,10 @@ DoubleColorSearch(x1, y1, width, rgb)
 	
 QuadColorSearch(pctX1, pctY1, pctX2, pctY2, rgb)
 	{
+	global winTitle
+	
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, Photo			
+	WinGetPos , X, Y, Width, Height, %winTitle%			
 	PixelSearch, CPx, CPy, Width*pctX1, Height*pctY1, Width*pctX2, Height*pctY2, rgb, 0, Fast RGB
 	
 	if (ErrorLevel==0)

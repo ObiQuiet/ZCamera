@@ -38,6 +38,10 @@ ListLines Off
 SendMode Input  			; Recommended by AHK
 SetWorkingDir %A_ScriptDir% ; Location for include files
 
+winTitle := "ahk_exe ZwiftApp.exe"  ; AHK's method of matching the game window.  https://www.autohotkey.com/docs/misc/WinTitle.htm
+									; used with window position and dimension functions
+									; NOTE: the #IfWinActive directive used in the hotkeys section below DOES NOT support use of variables
+									; This means that changes to this value also have to be made where that directive is used.
 #InstallKeybdHook
 #InstallMouseHook
 #UseHook On
@@ -160,7 +164,8 @@ no  := 0
 	minsFirstPic  := 	FirstPictureDelay  			; wait this many minutes before taking the first picture
 	msPicInterval :=    PictureInterval*60*1000   
 	numPicsToTake := 	NumberOfPictures   			; take no more than this many pictures.  Zero for no pictures at all.  
-	fPicTimerStarted := false
+	fPicTimerStarted            := false
+	fAchievementPicTimerStarted := false
  
 	fAchievementPics := TakePicturesOfAchievements
  
@@ -200,19 +205,21 @@ loop
   
 	else if (not fStopped) and (not fMenuFound) and fZwiftExists and fZwiftActive
 		{				
-		StatusMsg("ZCamera " . strCurrentView)
+		StatusMsg("ZCamera " . strCurrentView . objSearchArea.AverageTime())
 		
 		; start the picture-taking clocks for the first time
-		if (not fPicTimerStarted)
+		if (not fPicTimerStarted) and (numPicsToTake > 0)
 			{
 			msFirstPic := minsFirstPic * 60 * 1000
 			SetTimer, TakePicture, -%msFirstPic%
-			if (fAchievementPics)
-				{
-				SetTimer, CheckForAchievements, 1000
-				}
 			fPicTimerStarted := true
-			}		
+			}
+			
+		if (not fAchievementPicTimerStarted) and (fAchievementPics)
+			{
+			SetTimer, CheckForAchievements, 1000
+			fAchievementPicTimerStarted := true
+			}	
 		}	
 		
 	else if fMenuFound and fZwiftExists and fZwiftActive
@@ -356,8 +363,8 @@ CheckForAchievements:
 
 CheckForMenus:
 	
-	fZwiftExists := WinExist("ahk_exe ZwiftApp.exe")
-	fZwiftActive := WinActive("ahk_exe ZwiftApp.exe")
+	fZwiftExists := WinExist(winTitle)
+	fZwiftActive := WinActive(winTitle)
 	
 	if (fZwiftActive)
 		fMenuFound := CheckForMenus()
@@ -406,7 +413,7 @@ DroneTick:
 ; HotKeys
 ; --------------------------------------------------------------------------------------------------
 
-#IfWinActive ahk_exe ZwiftApp.exe  
+#IfWinActive ahk_exe ZwiftApp.exe   
 $d::
 	if (not fOkToSendKeys) or (fStopped)	; ignore the d if a menu or dialog is open, and send it to the game instead
 		{
@@ -426,7 +433,7 @@ $d::
 
 #IfWinActive
 
-#IfWinActive ahk_exe ZwiftApp.exe  
+#IfWinActive  ahk_exe ZwiftApp.exe  
 $c::
 
 	if (fMenuFound)				; ignore the c if a menu or dialog is open, and send it to the game instead

@@ -18,11 +18,12 @@
 
 ColorSearchGrid(pctXStart, pctXEnd, pctXIncr, pctYStart, pctYEnd, pctYIncr, fDebug := 0)
 	{
-	global rgbOrange, rgbBlue, rgbBlack, rgbDkGray, rgbLtGray, rgbVLtGray, rgbWhite   
+	global rgbOrange, rgbBlue, rgbBlack, rgbDkGray, rgbLtGray, rgbVLtGray, rgbWhite
+	global winTitle	
 
 	CoordMode, Pixel, Relative
 
-	WinGetPos , X, Y, Width, Height, A			
+	WinGetPos , X, Y, Width, Height, %winTitle%			
 
 	pctX := pctXStart
 	pctY := pctYStart

@@ -21,12 +21,12 @@ __New(pctX1_in, pctY1_in, pctX2_in, pctY2_in)
 	
 Search_Alg1(rgbColorToFind)
 	{
-	
+	global winTitle
 ;	DebugMsg("in Search_Alg1")
 	
 	
 ;	CoordMode, Pixel, Client
-	WinGetPos , X, Y, Width, Height, A			
+	WinGetPos , X, Y, Width, Height, %winTitle%			
 
 	
 	msStart := A_TickCount
@@ -78,9 +78,10 @@ Search_Alg1(rgbColorToFind)
 Search_Alg2()
 	{
 	global ListOfColors
+	global winTitle
 	
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, A			
+	WinGetPos , X, Y, Width, Height, %winTitle%			
 
 	msStart := A_TickCount
 
@@ -137,9 +138,10 @@ Search_Alg2()
 
 Search_Alg3(ByRef listPointsX, ByRef listPointsY, rgbColorToFind)
 	{
+	global winTitle
 	
 	CoordMode, Pixel, Relative
-	WinGetPos , X, Y, Width, Height, A			
+	WinGetPos , X, Y, Width, Height, %winTitle%			
 	
 	msStart := A_TickCount
 	
