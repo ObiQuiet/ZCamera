@@ -75,9 +75,9 @@ Search_Alg1(rgbColorToFind)
 	return found
 	}
 
-Search_Alg2()
+Search_Alg2(strTargets)
 	{
-	global ListOfColors
+	global rgbOrange
 	global winTitle
 	
 	CoordMode, Pixel, Relative
@@ -95,7 +95,7 @@ Search_Alg2()
 	found3 := false
 	
 #Warn UseUnsetLocal, Off 	
-	if ("" . rgbAtXY) in ListOfColors
+	if InStr(strTargets, rgbAtXY)
 		{
 		found1 := true
 		}
@@ -113,17 +113,15 @@ Search_Alg2()
 		}
 	
 	
-	if (found2 or found3)
+	if (found1 and (found2 or found3))
 		{
 	  ;  OutputDebug, Found %rgbAtXY% at %X% %Y% 
-	; Mousemove, %X%, %Y%
+	 ;Mousemove, %X%, %Y%
 		this.score := min(1, this.score+0.1)
-		result := true
 		}
 	else
 		{
 		this.score := max(0, this.score*0.9)
-		result := false
 		}
 	
 	msElapsed        := A_TickCount-msStart
@@ -132,8 +130,7 @@ Search_Alg2()
 	this.msBestCase  := min(this.msBestCase, msElapsed)
 	this.countSearches++
 	
-	result := this.score >= 0.3
-	return result
+	return this.score >= 0.3
 	}	
 
 Search_Alg3(ByRef listPointsX, ByRef listPointsY, rgbColorToFind)
@@ -169,6 +166,44 @@ Search_Alg3(ByRef listPointsX, ByRef listPointsY, rgbColorToFind)
 	this.countSearches++
 	
 	return found
+	}
+
+
+BlueTint()
+	{
+	global winTitle
+	
+	CoordMode, Pixel, Relative
+	WinGetPos , X, Y, Width, Height, %winTitle%			
+
+	biasBlue := 0
+
+	msStart := A_TickCount
+
+	loop 10
+		{
+		X := RandBetween(Width*this.pctX1,  Width*this.pctX2,  false)
+		Y := RandBetween(Height*this.pctY1, Height*this.pctY2, false)
+
+		PixelGetColor, rgbAtXY, X,    Y, RGB
+
+		numBlue  := (rgbAtXY & 0xFF)
+		numGreen := ((rgbAtXY & 0xFF00) >> 8)
+		numRed   := ((rgbAtXY & 0xFF0000) >> 16)
+
+		biasBlue += max(0, (numBlue - max(numGreen, numRed)))
+
+		}
+
+	biasBlue := biasBlue / 10
+			
+	msElapsed        := A_TickCount-msStart
+	this.msTotal     += msElapsed
+	this.msWorstCase := max(this.msWorstCase, msElapsed)
+	this.msBestCase  := min(this.msBestCase, msElapsed)
+	this.countSearches++
+	
+	return biasBlue
 	}
 
 
