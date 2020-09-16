@@ -100,7 +100,7 @@ msExitTime := A_TickCount+msExitDelay
 	fOkToSendKeys := false     ; when true, prevents ZCamera from sending any keystrokes that might interfere with menus or other programs
 					   	   
 	GoSub CheckForMenus
-	SetTimer, CheckForMenus, 150, 0   
+	SetTimer, CheckForMenus, 75, 0   
 	
 ; ---------------------
 ; Initialize the views we'll be switching between, and create a set of weighted choices from which to select one at random
@@ -205,7 +205,7 @@ loop
   
 	else if (not fStopped) and (not fMenuFound) and fZwiftExists and fZwiftActive
 		{				
-		StatusMsg("ZCamera " . strCurrentView . objSearchArea.AverageTime())
+		StatusMsg("ZCamera " . strCurrentView)
 		
 		; start the picture-taking clocks for the first time
 		if (not fPicTimerStarted) and (numPicsToTake > 0)
