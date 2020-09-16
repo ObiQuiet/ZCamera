@@ -74,13 +74,14 @@ CheckForMenus()
 	{
 	global rgbOrange, rgbOffWhite
 	global objSearchArea, objLowerSearchArea
+	global strMenuColors
 
 	msStart := A_TickCount    ; for measuring the time this function takes.   
 							  ; Worst-case=common-case performance (no menus found) needs to be under 500ms, since that's the timer interval
 	
-	result := ColorSearchHLine( 0.40,             0.85, 0.20, rgbOrange)     ; check for the Route/Intersection selection prompts
-		  or objSearchArea.Search_Alg2() 
-		  or objLowerSearchArea.Search_Alg2()
+	result := ColorSearchHLine( 0.40,             0.90, 0.20, rgbOrange, 20)     ; check for the Route/Intersection selection prompts
+		  or objSearchArea.Search_Alg2(strMenuColors) 
+		  or objLowerSearchArea.Search_Alg2(strMenuColors)
 		;  or  ColorSearchGrid( 0.40, 0.60, 0.03, 0.85, 0.95, 0.03, false)	; grid at the bottom center, for Message dialog and buttons
 		;  or  ColorSearchGrid( 0.40, 0.55, 0.03, 0.45, 0.55, 0.05, false)	; grid at center, for all other menus and dialogs
 		  or  ColorSearch(     0.92,             0.92,       rgbOffWhite)   ; group ride, pre-start Message window
