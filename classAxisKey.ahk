@@ -38,8 +38,8 @@ CleanUpAfterDroneMode()
 	HAxis := ""
 	; Send {Down}  ; FIXME corrects spurious view menu
 
-	; ensure all are keys up at the end of the flight, destructor does this now
-	; Send {Left up}{Right up}{Up up}{Down up}{+ up}{- up}	
+	; ensure all are keys up at the end of the flight
+	Send {Left up}{Right up}{Up up}{Down up}{+ up}{- up}	
 	}
 
 
