@@ -9,14 +9,21 @@ ColorSearch(pctX, pctY, rgb, pxSize := 5, variation := 0)  ; returns true if the
 	{
 	global winTitle
 	
+	result := false
 	CoordMode, Pixel, Relative
 	
 	WinGetPos , X, Y, Width, Height, %winTitle%
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, (Width*pctX)+pxSize, (Height*pctY)+pxSize, rgb, variation, Fast RGB
 	
+	if (ErrorLevel==0)
+		{
+		PixelGetColor, rgbAtXY, CPx+5, CPy, RGB
+		result := (rgbAtXY==rgb)
+		}
+	
 	; Box_Draw(Width*pctX, Height*pctY, pxSize, pxSize)
 	; sleep 500
-	return (ErrorLevel==0)
+	return result
 	}
 	
 ColorSearchHLine(pctX, pctY, pctWidth, rgb, variation := 0)	
@@ -26,12 +33,13 @@ ColorSearchHLine(pctX, pctY, pctWidth, rgb, variation := 0)
 	CoordMode, Pixel, Relative
 	WinGetPos , X, Y, Width, Height, %winTitle%  		
 	PixelSearch, CPx, CPy, Width*pctX, Height*pctY, Width*(pctX+pctWidth), 1+Height*pctY, rgb, variation, Fast RGB
+	return (ErrorLevel==0)
 	
 	; Box_Draw(Width*pctX, Height*pctY, Width*pctWidth, 1)
 	; sleep 500
 	
 	
-	return (ErrorLevel==0)	
+		
 	}
 	
 ColorSearchVLine(pctX, pctY, pctHeight, rgb, variation := 0)	
